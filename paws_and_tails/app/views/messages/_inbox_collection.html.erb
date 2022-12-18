@@ -1,0 +1,21 @@
+<% if messages.length == 0 %>
+  <p>No Messages Right Now.</p>
+<% else %>
+  <% messages.sort_by {|k,v| v}.reverse.each do | k,v | %>
+    <div class="card">
+      <div class="card-content">
+        <div class="content">
+          <div class="columns is-vcentered">
+            <div class="column is-8 is-vcentered">
+              Conversation with <strong><%= User.get_user_name(k) %></strong>
+            </div>
+            <div class="column is-4">
+              <%= link_to "Read", "/messages/" + k.to_s, class: 'button is-warning is-pulled-right' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  <% end %>
+<% end %>

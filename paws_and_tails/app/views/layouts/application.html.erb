@@ -1,0 +1,121 @@
+<%# Our "base" layout should be a valid HTML document. %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Paws and Tails</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <%# <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <script src = "https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+  <%= stylesheet_link_tag 'application', "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  <%#= javascript_importmap_tags %>
+
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>-->
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+</head>
+<body>
+
+<%#= content_for :head do %>
+  <%#= javascript_import_module_tag "paws" %>
+<%# end %>
+
+<nav class="navbar is-warning has-shadow" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item is-family-code" href="/animals">
+      Paws and Tails
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/animals">
+        Find by Animals
+      </a>
+      <a class="navbar-item" href="/breeders">
+        Find by Breeders
+      </a>
+      <% if current_user %>
+        <a class="navbar-item" href="/messages/inbox/show">
+          Message Inbox
+        </a>
+      <% end %>
+
+      <!--      <div class="navbar-item has-dropdown is-hoverable">-->
+      <!--        <a class="navbar-link">-->
+      <!--          More-->
+      <!--        </a>-->
+
+      <!--        <div class="navbar-dropdown">-->
+      <!--          <a class="navbar-item">-->
+      <!--            About-->
+      <!--          </a>-->
+      <!--          <a class="navbar-item">-->
+      <!--            Jobs-->
+      <!--          </a>-->
+      <!--          <a class="navbar-item">-->
+      <!--            Contact-->
+      <!--          </a>-->
+      <!--          <hr class="navbar-divider">-->
+      <!--          <a class="navbar-item">-->
+      <!--            Report an issue-->
+      <!--          </a>-->
+      <!--        </div>-->
+      <!--      </div>-->
+    </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <% if current_user %>
+                <%= link_to "My Profile", user_path(current_user.id), class: "button is-warning is-light" %>
+                <%= link_to "Log Out", logout_path, class: "button is-light" %>
+              <% else %>
+                <%= link_to "Sign Up", signup_path, class: "button is-warning is-light" %>
+                <%= link_to "Log In", login_path, class: "button is-light" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+  </div>
+</nav>
+
+<%# if current_user %>
+<!--  Logged in as <%#= current_user.user_name %>.-->
+  <%#= link_to "Log Out", logout_path %>
+<%# else %>
+<!--  <%#= link_to "Sign Up", signup_path %> or-->
+  <%#= link_to "Log In", login_path %>
+<%# end %>
+
+<section class="section">
+  <div class="container">
+    <%= render 'layouts/flash' %>
+    <main id="main">
+      <%= yield %>
+    </main>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      Brought to you with ❤️ from Paws and Tails Team
+    </p>
+  </div>
+</footer>
+
+
+</body>
+</html>

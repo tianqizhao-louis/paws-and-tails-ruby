@@ -1,0 +1,26 @@
+<!--<h1>New Animal</h1>-->
+
+<%#= render 'form' %>
+
+<%#= link_to 'Back', animals_path %>
+
+
+<div class="columns">
+  <div class="column">
+    <h3 class="title">Add a New Animal</h3>
+  </div>
+</div>
+
+
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-10">
+    <%= render 'form' %>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-10">
+    <%= link_to 'Cancel', animals_url, class: 'button' %>
+  </div>
+</div>

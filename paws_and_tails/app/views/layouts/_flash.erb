@@ -1,0 +1,17 @@
+<% if flash[:notice] %>
+  <div class="notification is-success is-light">
+    <button class="delete" aria-label="delete"></button>
+    <%= flash[:notice] %>
+  </div>
+<% elsif flash[:warning] %>
+  <div class="notification is-danger">
+    <button class="delete" aria-label="delete"></button>
+    <%= flash[:warning] %>
+  </div>
+<% end %>
+
+<%# flash.each do |type, msg| %>
+<!--  <div class="notification is-info is-light">-->
+    <%#= msg %>
+<!--  </div>-->
+<%# end %>

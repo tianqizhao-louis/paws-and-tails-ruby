@@ -1,0 +1,91 @@
+<div class="columns">
+  <div class="column">
+    <h3 class="title">
+      Private Message with <em><%= @to_user_name %></em>
+    </h3>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-10" style="border: 2px groove green">
+    <div id="message-content" style="height: 300px; overflow-y: auto;">
+      <%= render partial: "conversation", locals: {conversations: @conversations, from_user_id: @from_user_id,
+                                                   from_user_name: @from_user_name, to_user_name: @to_user_name} %>
+    </div>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-10">
+    <div class="columns">
+      <div class="column is-10">
+        <label>
+          <input id="send-message-input-area" class="input" type="text" placeholder="Type Your Message Here...">
+        </label>
+      </div>
+      <div class="column is-2">
+        <button id="send-message" class="button is-warning">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    scroll();
+
+    document.querySelector("#send-message").addEventListener("click", function (event) {
+        event.preventDefault();
+        let messageInputSelector = document.getElementById('send-message-input-area');
+        let messageInputSelectorValue = messageInputSelector.value;
+        messageInputSelector.value = "";
+
+        if (messageInputSelectorValue.trim() !== "") {
+            fetch("/messages/api/new", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'X-Requested-With': 'XMLHttpRequest',
+                    // 'X-CSRF-Token': token
+                },
+                body: JSON.stringify({
+                    "from_user_id": <%= @from_user_id %>,
+                    "to_user_id": <%= @to_user_id %>,
+                    "content": messageInputSelectorValue
+                }),
+                credentials: 'same-origin'
+            })
+                .then(response => response.text())
+                .then(data => {
+                    document.querySelector("#message-content").replaceChildren();
+                    document.querySelector("#message-content").innerHTML = data;
+                    scroll();
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+
+        messageInputSelector.focus();
+    });
+
+    // Keyboard INTERACTION
+    document.addEventListener('keyup', (event) => {
+        const keyName = event.key;
+        // console.log(event);
+        // console.log(event.key);
+        // Observe: key - 'Enter', code - 'Enter', keyCode - 13
+        if (keyName === 'Enter') {
+            // return; // do nothing, if so is your wish
+
+            // do what you want here
+            document.getElementById("send-message").click();
+        }
+    }, false);
+
+
+    function scroll() {
+        let messageBody = document.querySelector('#message-content');
+        messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+    }
+</script>

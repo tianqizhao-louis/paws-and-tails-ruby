@@ -1,0 +1,69 @@
+<%= form_for(@animal) do |f| %>
+  <% if @animal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@animal.errors.count, "error") %> prohibited this animal from being saved:</h2>
+
+      <ul>
+        <% @animal.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, "Animal Name", class:'label' %>
+    <div class="control">
+      <%= f.text_field :name, class:'input' %>
+    </div>
+  </div>
+  <div class="field">
+    <%= f.label :animal_type, "Animal Type", class: 'label' %>
+    <div class="control">
+      <%= f.text_field :animal_type, class: 'input' %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :breed, "Animal Breed", class:'label' %>
+    <div class="control">
+      <%= f.text_field :breed, class:'input' %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :price, "Price", class:'label' %>
+    <div class="control">
+      <%= f.text_field :price, class:'input' %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :anticipated_birthday, "Anticipated Birthday", class:'label' %>
+    <div class="control">
+      <%= f.text_field :anticipated_birthday, class:'input' %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :image_link, "Image Link", class:'label' %>
+    <div class="control">
+      <%= f.text_field :image_link, class:'input' %>
+    </div>
+  </div>
+
+  <% if current_user[:user_type].to_s == "admin" %>
+    <div class="field">
+      <%= f.label :breeder_id, "Breeder id", class:'label' %>
+      <div class="control">
+        <%= f.text_field :breeder_id, class:'input' %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <div class="control">
+      <%= f.submit 'Submit', class: 'button is-warning' %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+<div class="columns is-mobile is-centered">
+  <div class="column is-8">
+    <h3 class="title">Message Inbox</h3>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-6">
+    <%= render partial: "inbox_collection", locals: {messages: @message_to_users} %>
+  </div>
+</div>

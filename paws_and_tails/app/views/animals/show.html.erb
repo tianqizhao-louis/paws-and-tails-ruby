@@ -1,0 +1,217 @@
+<div class="columns">
+  <div class="column">
+    <h3 class="title">Animal: <%= @animal.name %></h3>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-6 has-text-centered">
+    <figure class="image is-4by3">
+      <% if @animal.image_link.to_s == '' %>
+        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="placeholder">
+      <% else %>
+        <img src="<%= @animal.image_link %>" alt="animal picture">
+      <% end %>
+    </figure>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-10">
+    <div class="box">
+      <div class="columns">
+        <div class="column is-4">
+          Animal Type:
+        </div>
+        <div class="column is-8">
+          <%= @animal.animal_type %>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-4">
+          Breed:
+        </div>
+        <div class="column is-8">
+          <%= @animal.breed %>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-4">
+          Price:
+        </div>
+        <div class="column is-8">
+          <%= @animal.price %>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-4">
+          Anticipated Birthday:
+        </div>
+        <div class="column is-8">
+          <%= @animal.anticipated_birthday.getlocal.strftime("%m/%d/%Y") %>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-4">
+          Breeder:
+        </div>
+        <div class="column is-8">
+          <%= link_to @breeder.name, breeder_path(@breeder) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if !current_user.nil? && (current_user[:user_type].to_s == "admin" || UserToBreeder.get_user_id(@breeder.id.to_s).to_s == current_user.id.to_s) %>
+  <div class="columns is-mobile is-centered">
+    <div class="column is-10" style="border: 2px groove green">
+
+      <div class="columns">
+        <div class="column">
+          <h3 class="is-size-4 has-background-white-ter has-text-centered">Breeder Panel</h3>
+        </div>
+      </div>
+
+      <% @get_waitlists = Waitlist.where(animal_id: @animal.id).order(:created_at) %>
+
+      <% if @get_waitlists.length == 0 %>
+        <p class="has-text-centered"><br>Currently, there is no petfinder on this animal's waitlist.</p>
+      <% else %>
+        <div class="columns">
+          <div class="column">
+            <p>Waitlist size: <%= @get_waitlists.length %></p>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column">
+            <strong>Petfinders:</strong>
+          </div>
+        </div>
+        <div class="columns is-mobile is-centered">
+          <div class="column is-6">
+            <% @get_waitlists.each do | w | %>
+              <div class="columns">
+                <div class="column is-4">
+                  <p><%= User.get_user_name w.user_id %></p>
+                </div>
+                <div class="column is-8">
+                  <%= link_to "Remove from Waitlist", "/waitlists/manage/remove/" + w.user_id.to_s + "/" + @animal.id.to_s %>
+                  &nbsp;
+                  <%= link_to "Message Petfinder", "/messages/" + w.user_id.to_s %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <% if !current_user.nil? %>
+    <div class="columns is-mobile is-centered">
+      <div id="waitlist-display-column" class="column is-10 has-text-right">
+        <% if @already_waitlist %>
+          <p>Your current position: <%= @current_place %></p>
+          <p>Total Waitlist: <%= @total_place %></p>
+          <%= link_to "Leave Waitlist", "/waitlists/leave", class: 'button is-danger', id: 'leave-waitlist-btn' %>
+        <% else %>
+          <%= link_to "Join Animal Liter Waitlist", "/waitlists/join", class: 'button is-warning', id: 'join-waitlist-btn' %>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="columns is-mobile is-centered">
+      <div class="column is-10 has-text-right">
+        <%= link_to "Log In to Join Waitlist", "/login", class: 'button is-warning' %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-10 has-text-right">
+    <%= link_to "Back", animals_path, class: 'button is-info' %>
+
+    <% if @is_admin_or_current_breeder %>
+      <%= link_to "Delete", "/animals/redesigned_destroy/" + @animal.id.to_s, class: 'button is-danger'%>
+      <%= link_to "Edit", edit_animal_path(@animal), class: 'button is-warning' %>
+    <% end %>
+  </div>
+</div>
+
+
+<script>
+
+    if (document.getElementById("leave-waitlist-btn")) {
+        attachLeaveHandler();
+    }
+
+    if (document.getElementById("join-waitlist-btn")) {
+        attachJoinHandler();
+    }
+
+    function attachJoinHandler() {
+        document.getElementById('join-waitlist-btn').addEventListener("click", function (event) {
+            event.preventDefault();
+
+            fetch("/waitlists/join", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'X-Requested-With': 'XMLHttpRequest',
+                    // 'X-CSRF-Token': token
+                },
+                body: JSON.stringify({
+                    "animal_id": <%= @animal.id.to_s %>,
+                    "user_id": <%= current_user.nil? ? "" : current_user.id.to_s %>
+                }),
+                credentials: 'same-origin'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const waitlistDisplayColumnSelector = document.getElementById("waitlist-display-column");
+                    waitlistDisplayColumnSelector.replaceChildren();
+                    waitlistDisplayColumnSelector.innerHTML += "<p>Your current position:" + data["current_place"] + "</p>"
+                    waitlistDisplayColumnSelector.innerHTML += "<p>Total Waitlist:" + data["total_place"] + "</p>"
+                    waitlistDisplayColumnSelector.innerHTML += "<a class='button is-danger' id='leave-waitlist-btn' href='/waitlists/leave'>Leave Waitlist</a>"
+                    attachLeaveHandler();
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        });
+    }
+
+    function attachLeaveHandler() {
+        document.getElementById("leave-waitlist-btn").addEventListener("click", function (e) {
+            e.preventDefault();
+            fetch("/waitlists/leave", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'X-Requested-With': 'XMLHttpRequest',
+                    // 'X-CSRF-Token': token
+                },
+                body: JSON.stringify({
+                    "animal_id": <%= @animal.id.to_s %>,
+                    "user_id": <%= current_user.nil? ? "" : current_user.id.to_s %>
+                }),
+                credentials: 'same-origin'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const waitlistDisplayColumnSelector = document.getElementById("waitlist-display-column");
+                    waitlistDisplayColumnSelector.replaceChildren();
+                    waitlistDisplayColumnSelector.innerHTML += "<a class='button is-warning' id='join-waitlist-btn' href='/waitlists/join'>Join Animal Liter Waitlist</a>"
+                    attachJoinHandler();
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        })
+    }
+</script>
+

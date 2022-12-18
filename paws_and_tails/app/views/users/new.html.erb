@@ -1,0 +1,74 @@
+
+<div class="columns">
+  <div class="column">
+    <article class="message is-danger">
+      <div class="message-header">
+        <p>Warning</p>
+<!--        <button class="delete" aria-label="delete"></button>-->
+      </div>
+      <div class="message-body">
+        This is a demo website. Although we do hash your password, we do not guarantee that it is stored safely. <br>
+        Thus, we <strong>highly recommend</strong> you using naive passwords like '123' or 'test' for demo and testing purposes.
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="columns">
+  <div class="column">
+    <h3 class="title">Sign Up</h3>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-10">
+    <%= form_for @user do |f| %>
+      <% if @user.errors.any? %>
+        <div class="error_messages">
+          <h2>Form is invalid</h2>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= f.label :user_name, "User Name", class: "label" %>
+        <div class="control">
+          <%= f.text_field :user_name, class: "input" %>
+        </div>
+      </div>
+      <div class="field">
+        <%= f.label :password, "Password", class: "label" %>
+        <div class="control">
+          <%= f.password_field :password, class: "input" %>
+        </div>
+      </div>
+      <div class="field">
+        <%= f.label :password_confirmation, class: "label" %>
+        <div class="control">
+          <%= f.password_field :password_confirmation, class: "input" %>
+        </div>
+      </div>
+      <div class="field">
+        <%= f.label :user_type, class: "label" %>
+        <div class="select">
+          <%= select_tag(:type_id, options_for_select([['petfinder', 'petfinder'], ['breeder', 'breeder'], ['admin', 'admin']], 'petfinder')) %>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <%= f.submit "Sign Up", class: 'button is-warning' %>
+        </div>
+      </div>
+<!--      <div class="field">-->
+<!--        <%#= f.label :user_type %><br />-->
+        <%#= f.text_field :user_type %>
+<!--      </div>-->
+<!--      <div class="actions"><%#= f.submit "Sign Up" %></div>-->
+    <% end %>
+  </div>
+</div>

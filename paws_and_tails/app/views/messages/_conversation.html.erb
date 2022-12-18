@@ -1,0 +1,16 @@
+<% unless conversations.nil? %>
+  <% conversations.each do | c | %>
+    <p>
+      <% if c.from_user_id.to_s == from_user_id.to_s %>
+        <strong>You</strong>&nbsp; <em><%= c.created_at.getlocal.strftime("%m/%d/%Y %H:%M:%S") %></em>
+        <br>
+        <%= c.content %>
+      <% else %>
+        <strong class="has-text-link"><%= to_user_name %></strong>&nbsp; <em><%= c.created_at.getlocal.strftime("%m/%d/%Y %H:%M:%S") %></em>
+        <br>
+        <%= c.content %>
+      <% end %>
+    </p>
+    <br>
+  <% end %>
+<%  end %>

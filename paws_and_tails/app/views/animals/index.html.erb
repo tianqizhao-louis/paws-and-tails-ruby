@@ -1,0 +1,97 @@
+<div class="columns">
+  <div class="column">
+    <h3 class="title">Find Animals Near You</h3>
+    <p class="subtitle">Bring Your New Best Friend Home.</p>
+  </div>
+</div>
+
+<br><br>
+
+<div class="columns is-multiline is-centered is-mobile has-background-light">
+  <div class="column is-12 has-text-centered">
+    <span class="subtitle is-size-3">Search for Breeder Location</span>
+  </div>
+  <div class="column is-6 has-text-right">
+    <div id="dropdown-city" class="dropdown mr-3">
+      <div class="dropdown-trigger">
+        <button id="dropdown-visible-city" class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+          <span id="current-city">Any City</span>
+          <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu" role="menu">
+        <div class="dropdown-content">
+          <% @cities.each do | city | %>
+            <a id="dropdown-city-select-<%= city %>" href="/dropdown/city/select" class="dropdown-item has-text-left city-dropdown-select">
+              <%= city %>
+            </a>
+          <% end %>
+          <a id="dropdown-city-select-Any City" href="/dropdown/city/select" class="dropdown-item has-text-left city-dropdown-select">
+            Any City
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="dropdown-country" class="dropdown">
+      <div class="dropdown-trigger">
+        <button id="dropdown-visible-country" class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+          <span id="current-country">Any Country</span>
+          <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu" role="menu">
+        <div class="dropdown-content">
+          <% @countries.each do | country | %>
+            <a id="dropdown-country-select-<%= country %>" href="/dropdown/country/select" class="dropdown-item has-text-left country-dropdown-select">
+              <%= country %>
+            </a>
+          <% end %>
+          <a id="dropdown-city-select-Any Country" href="/dropdown/country/select" class="dropdown-item has-text-left country-dropdown-select">
+            Any Country
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="column is-6">
+    <button id="submit-location" class="button is-warning mr-3">Submit</button>
+    <button id="reset-location" class="button is-warning is-light">Reset</button>
+  </div>
+</div>
+
+
+<div class="columns">
+  <div class="column is-12 has-text-right">
+    <button id="sort-name" class="button is-small is-rounded animal-sort-button sort-name">Sort by Name</button>
+    <button id="sort-breeder_id" class="button is-small is-rounded animal-sort-button sort-breeder_id">Sort by Breeder</button>
+    <button id="sort-animal_type" class="button is-small is-rounded animal-sort-button sort-animal_type">Sort by Type</button>
+    <button id="sort-breed" class="button is-small is-rounded animal-sort-button sort-breed">Sort by Breed</button>
+    <button id="sort-price" class="button is-small is-rounded animal-sort-button sort-price">Sort by Price</button>
+    <button id="sort-anticipated_birthday" class="button is-small is-rounded animal-sort-button sort-anticipated_birthday">Sort by Birth</button>
+    <button id="sort-city" class="button is-small is-rounded animal-sort-button sort-city">Sort by City</button>
+    <button id="sort-country" class="button is-small is-rounded animal-sort-button sort-country">Sort by Country</button>
+  </div>
+</div>
+
+<br>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-10">
+    <div id="animals-container" class="columns is-multiline is-mobile">
+      <%= render partial: "animal_grid", locals: {animals_var: @animals} %>
+    </div>
+  </div>
+</div>
+
+
+<% if @is_admin %>
+  <div class="columns">
+    <div class="column has-text-right">
+      <%= link_to 'New Animal', new_animal_path, class:"button is-warning is-light" %>
+    </div>
+  </div>
+<% end %>

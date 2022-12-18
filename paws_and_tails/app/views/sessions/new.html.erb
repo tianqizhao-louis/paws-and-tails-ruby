@@ -1,0 +1,29 @@
+<div class="columns">
+  <div class="column">
+    <h3 class="title">Log In</h3>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-10">
+    <%= form_tag sessions_path do %>
+      <div class="field">
+        <%= label_tag :user_name, "User Name", class: "label" %>
+        <div class="control">
+          <%= text_field_tag :user_name, params[:user_name], class: "input" %>
+        </div>
+      </div>
+      <div class="field">
+        <%= label_tag :password, "Password", class: "label" %>
+        <div class="control">
+          <%= password_field_tag :password, nil, class: "input" %>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <%= submit_tag "Log In", class: 'button is-warning' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

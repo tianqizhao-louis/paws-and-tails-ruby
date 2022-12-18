@@ -1,0 +1,43 @@
+<div class="columns">
+  <div class="column">
+    <h3 class="title">Find Breeders Near You</h3>
+    <p class="subtitle">Bring Your New Best Friend Home.</p>
+  </div>
+</div>
+
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-6">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <thead>
+      <tr>
+        <th>Breeder Name</th>
+        <th>Breeder City</th>
+        <th>Breeder Country</th>
+        <th>Price Level</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @breeders.each do |breeder| %>
+        <tr>
+          <td><%= link_to "#{breeder.name}", breeder_path(breeder) %></td>
+          <td><%= breeder.city %></td>
+          <td><%= breeder.country %></td>
+          <td><%= breeder.price_level %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<% if @is_admin %>
+  <div class="columns">
+    <div class="column has-text-right">
+      <%= link_to 'New Breeder', new_breeder_path, class:"button is-warning is-light" %>
+    </div>
+  </div>
+<% end %>
+

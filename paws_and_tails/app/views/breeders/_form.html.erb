@@ -1,0 +1,62 @@
+<%= form_for(@breeder) do |f| %>
+  <% if @breeder.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@breeder.errors.count, "error") %> prohibited this breeder from being saved:</h2>
+
+      <ul>
+        <% @breeder.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, "Breeder Name", class:'label' %>
+    <div class="control">
+      <%= f.text_field :name, class:'input' %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :email, "Email", class:'label' %>
+    <div class="control">
+      <%= f.text_field :email, class:'input' %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :city, "City", class:'label' %>
+    <div class="control">
+      <%= f.text_field :city, class:'input' %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :country, "Country", class:'label' %>
+    <div class="control">
+      <%= f.text_field :country, class:'input' %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :price_level, "Price Level", class:'label' %>
+    <div class="control">
+      <%= f.text_field :price_level, class:'input' %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :address, "Address", class:'label' %>
+    <div class="control">
+      <%= f.text_field :address, class:'input' %>
+    </div>
+  </div>
+
+
+  <div class="field">
+    <div class="control">
+      <%= f.submit 'Submit', class: 'button is-warning' %>
+    </div>
+  </div>
+<% end %>

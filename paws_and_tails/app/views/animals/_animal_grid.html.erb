@@ -1,0 +1,36 @@
+<% animals_var.each do | animal | %>
+  <div class="column is-4">
+    <div class="card shadow-md is-cursor-pointer transform is-duration-300 hover-shadow-xl hover-translate-y">
+      <div class="card-image">
+        <figure class="image is-4by3">
+          <% if animal.image_link.to_s == '' %>
+            <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+          <% else %>
+            <img src="<%= animal.image_link %>" alt="animal picture">
+          <% end %>
+        </figure>
+      </div>
+      <div class="card-content">
+        <div class="media">
+          <div class="media-content">
+            <p class="title is-4"><%= link_to animal.name, animal_path(animal) %></p>
+            <p class="subtitle is-6">@My breeder: <%= Animal.get_breeder(animal.id).name %></p>
+          </div>
+        </div>
+
+        <div class="content">
+          Animal Type: <%= animal.animal_type %>
+          <br>
+          Breed: <%= animal.breed %>
+          <br>
+          Price: <%= animal.price %>
+          <br>
+          Anticipated Birth: <%= animal.anticipated_birthday.getlocal.strftime("%m/%d/%Y") %>
+          <br>
+          <br>
+          <strong>Location:</strong> <%= Animal.get_breeder(animal.id).city%>, <%= Animal.get_breeder(animal.id).country%>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

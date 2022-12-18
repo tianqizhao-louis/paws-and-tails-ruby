@@ -1,0 +1,32 @@
+<div class="columns">
+  <div class="column">
+    <h3 class="title">Username: <%= @user.user_name %></h3>
+  </div>
+</div>
+
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-10">
+    <div class="box">
+      <div class="columns">
+        <div class="column is-4">
+          User Type:
+        </div>
+        <div class="column is-8">
+          <%= @user.user_type %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-10">
+    <% if !UserToBreeder.exists?(user_id: @user.id) && current_user.user_type.to_s == "breeder" %>
+      <%= link_to "Link with a Breeder", new_breeder_path, class: "button is-warning is-light" %>
+    <% elsif UserToBreeder.exists?(user_id: @user.id) && current_user.user_type.to_s == "breeder" %>
+      <%= link_to "Go to my breeder profile", breeder_path(UserToBreeder.get_breeder_id(current_user.id)), class: "button is-warning is-light" %>
+      <%= link_to "Delete Breeder Profile", "/breeders/redesigned_destroy/" + UserToBreeder.get_breeder_id(current_user.id).to_s, class: 'button is-danger'%>
+    <% end %>
+  </div>
+</div>
