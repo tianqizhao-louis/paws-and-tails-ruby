@@ -25,7 +25,7 @@ We are building a SAAS app that aims to connect pet finders and breeders togethe
 
 ## Team Members
 
-    Tianqi Zhao (tz2529)
+  Tianqi Zhao (tz2529)
 	Jiacheng Yin (jy3280)
 	Dmitrii Zakharov (dz2428)
 
@@ -41,10 +41,10 @@ We use ruby version `3.1.2` and rails version `7.0.4`, which is different from t
 
 [https://www.docker.com/](https://www.docker.com/)
 
-`docker-compose` is required to run the project. It should come with the installation of Docker. Run `docker-compose -v` to make sure you have it downloaded.
+`docker compose` is required to run the project. It should come with the installation of Docker. Run `docker compose -v` to make sure you have it downloaded.
 
 ```bash
-docker-compose -v                                 08:43:55 PM
+docker compose -v                                 08:43:55 PM
 >> Docker Compose version v2.12.1
 ```
 
@@ -70,7 +70,7 @@ Note that if you directly download the `.env` file from Coursework, it might be 
 Run `docker-compose build` to build the image.
 
 ```bash
-docker-compose build
+docker compose build
 ```
 
 It takes some time to build the image. Feel free to let us know if any error occurs so we can solve it for you (there shouldn't be any error, though).
@@ -84,7 +84,7 @@ We use `selenium/standalone-firefox` to simulate all browser interactions, that 
 *This process could take some time.*
 
 ```bash 
-docker-compose up
+docker compose up
 ```
 
 Then, you have the project running! Go to `0.0.0.0:3000`
@@ -98,7 +98,7 @@ Then, you have the project running! Go to `0.0.0.0:3000`
 Before running the tests, please make sure `docker-compose up` is running. Especially the `firefox` image must be up and running, because Cucumber use `Selenium` to talk to the simulated browser.
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 - Run all tests at once
@@ -108,19 +108,19 @@ We use `guard` to automatically run all the testing and it will also listen to `
 To run all the tests at once:
 
 ```bash 
-docker-compose run --rm web bundle exec guard
+docker compose run --rm web bundle exec guard
 ```
 
 Only run rspec:
 
 ```bash 
-docker-compose run --rm web rails spec
+docker compose run --rm web rails spec
 ```
 
 Only run cucumber:
 
 ```bash 
-docker-compose run --rm web rails cucumber
+docker compose run --rm web rails cucumber
 ```
 
 ### Troubleshoot

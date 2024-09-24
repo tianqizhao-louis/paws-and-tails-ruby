@@ -10,15 +10,15 @@ default: &default
   timeout: 5000
 
 development:
-  adapter: postgresql
-  encoding: utf8
-  database: <%= ENV['RDS_DB_NAME_DEV'] %>
-  username: <%= ENV['RDS_USERNAME'] %>
-  password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME_DEV'] %>
-  port: <%= ENV['RDS_PORT'] %>
-#  <<: *default
-#  database: db/development.sqlite3
+  # adapter: postgresql
+  # encoding: utf8
+  # database: <%= ENV['RDS_DB_NAME_DEV'] %>
+  # username: <%= ENV['RDS_USERNAME'] %>
+  # password: <%= ENV['RDS_PASSWORD'] %>
+  # host: <%= ENV['RDS_HOSTNAME_DEV'] %>
+  # port: <%= ENV['RDS_PORT'] %>
+  <<: *default
+  database: db/development.sqlite3
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -28,12 +28,12 @@ test:
   database: db/test.sqlite3
 
 production:
-#  adapter: postgresql
-#  encoding: utf8
-#  database: <%= ENV['RDS_DB_NAME_PRO'] %>
-#  username: <%= ENV['RDS_USERNAME'] %>
-#  password: <%= ENV['RDS_PASSWORD'] %>
-#  host: <%= ENV['RDS_HOSTNAME_PRO'] %>
-#  port: <%= ENV['RDS_PORT'] %>
+  #  adapter: postgresql
+  #  encoding: utf8
+  #  database: <%= ENV['RDS_DB_NAME_PRO'] %>
+  #  username: <%= ENV['RDS_USERNAME'] %>
+  #  password: <%= ENV['RDS_PASSWORD'] %>
+  #  host: <%= ENV['RDS_HOSTNAME_PRO'] %>
+  #  port: <%= ENV['RDS_PORT'] %>
   <<: *default
   database: db/production.sqlite3
